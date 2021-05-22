@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.android.guicelebrini.whatsapp.R;
 
@@ -13,20 +14,21 @@ public class LoginActivity extends AppCompatActivity {
 
     private Button buttonCadastrar;
 
+    private EditText editTelefone;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
         buttonCadastrar = findViewById(R.id.buttonCadastrar);
+        editTelefone = findViewById(R.id.editTelefone);
 
-        buttonCadastrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent destino = new Intent(getApplicationContext(), ValidacaoActivity.class);
-                startActivity(destino);
-            }
-        });
 
+    }
+
+    public void trocarTela(View view){
+        Intent destino = new Intent(getApplicationContext(), ValidacaoActivity.class);
+        startActivity(destino);
     }
 }

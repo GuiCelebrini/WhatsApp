@@ -60,7 +60,7 @@
         app:layout_constraintTop_toTopOf="@+id/editTextNumber" />
 
     <EditText
-        android:id="@+id/editTextNumber3"
+        android:id="@+id/editTelefone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -78,6 +78,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
+        android:onClick="trocarTela"
         android:text="Cadastrar"
         android:textColor="@color/whatsapp_green"
         app:backgroundTint="@color/white"
