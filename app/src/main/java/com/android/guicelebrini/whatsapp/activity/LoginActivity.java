@@ -11,7 +11,7 @@ import android.widget.EditText;
 import com.android.guicelebrini.whatsapp.R;
 
 public class LoginActivity extends AppCompatActivity {
-
+    // ah é
     private Button buttonCadastrar;
 
     private EditText editTelefone;
