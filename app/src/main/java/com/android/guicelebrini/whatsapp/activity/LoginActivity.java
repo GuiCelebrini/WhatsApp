@@ -10,7 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.android.guicelebrini.whatsapp.R;
+import com.android.guicelebrini.whatsapp.helper.Preferences;
 
+import java.util.HashMap;
 import java.util.Random;
 
 public class LoginActivity extends AppCompatActivity {
@@ -34,15 +36,26 @@ public class LoginActivity extends AppCompatActivity {
                                 editNumberDDD.getText().toString() +
                                 editNumberPhone.getText().toString();
 
-                //gerar token
-                Random random = new Random();
-                int randomNumber = random.nextInt((9999-1000) + 1000);
-                String token = String.valueOf(randomNumber);
+                //Saving data for validation
+                Preferences preferences = new Preferences(LoginActivity.this);
+                preferences.saveUserPreferences(username, phoneNumber, generateToken());
 
-                Log.i("Resultado", token);
+                HashMap<String, String> user = preferences.getUserData();
+
+                Log.i("Result",  "Name " + user.get("username") + " Phone " + user.get("phoneNumber") + " Token " + user.get("token"));
+                /*Log.i("Result", user.get("phoneNumber"));
+                Log.i("Result", user.get("token"));*/
             }
         });
 
+    }
+
+    public String generateToken(){
+        Random random = new Random();
+        int randomNumber = random.nextInt((9999-1000) + 1000);
+        String token = String.valueOf(randomNumber);
+
+        return token;
     }
 
     public void findViewsById(){
