@@ -18,7 +18,7 @@
         app:srcCompat="@drawable/logo_whatsapp" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/editPersonName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
@@ -35,7 +35,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <EditText
-        android:id="@+id/editTextNumber"
+        android:id="@+id/editNumberCountry"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
@@ -43,11 +43,11 @@
         android:hint="+55"
         android:inputType="number"
         android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        app:layout_constraintStart_toStartOf="@+id/editPersonName"
+        app:layout_constraintTop_toBottomOf="@+id/editPersonName" />
 
     <EditText
-        android:id="@+id/editTextNumber2"
+        android:id="@+id/editNumberDDD"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -56,11 +56,11 @@
         android:hint="22"
         android:inputType="number"
         android:textColor="@color/white"
-        app:layout_constraintStart_toEndOf="@+id/editTextNumber"
-        app:layout_constraintTop_toTopOf="@+id/editTextNumber" />
+        app:layout_constraintStart_toEndOf="@+id/editNumberCountry"
+        app:layout_constraintTop_toTopOf="@+id/editNumberCountry" />
 
     <EditText
-        android:id="@+id/editTelefone"
+        android:id="@+id/editNumberPhone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -69,12 +69,12 @@
         android:hint="999999999"
         android:inputType="number"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName"
-        app:layout_constraintStart_toEndOf="@+id/editTextNumber2"
-        app:layout_constraintTop_toTopOf="@+id/editTextNumber2" />
+        app:layout_constraintEnd_toEndOf="@+id/editPersonName"
+        app:layout_constraintStart_toEndOf="@+id/editNumberDDD"
+        app:layout_constraintTop_toTopOf="@+id/editNumberDDD" />
 
     <Button
-        android:id="@+id/buttonCadastrar"
+        android:id="@+id/buttonRegister"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -82,8 +82,8 @@
         android:text="Cadastrar"
         android:textColor="@color/whatsapp_green"
         app:backgroundTint="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNumber" />
+        app:layout_constraintEnd_toEndOf="@+id/editPersonName"
+        app:layout_constraintStart_toStartOf="@+id/editPersonName"
+        app:layout_constraintTop_toBottomOf="@+id/editNumberCountry" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
