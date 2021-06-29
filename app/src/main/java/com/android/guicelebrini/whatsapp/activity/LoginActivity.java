@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +20,8 @@ public class LoginActivity extends AppCompatActivity {
     private Button buttonRegister;
     private EditText editPersonName;
     private EditText editNumberCountry ,editNumberDDD ,editNumberPhone;
+
+    private String messageSMS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +43,13 @@ public class LoginActivity extends AppCompatActivity {
                 Preferences preferences = new Preferences(LoginActivity.this);
                 preferences.saveUserPreferences(username, phoneNumber, generateToken());
 
-                HashMap<String, String> user = preferences.getUserData();
+                //sending the SMS
 
-                Log.i("Result",  "Name " + user.get("username") + " Phone " + user.get("phoneNumber") + " Token " + user.get("token"));
-                /*Log.i("Result", user.get("phoneNumber"));
-                Log.i("Result", user.get("token"));*/
+                Boolean wasSent = sendSMS("+" + phoneNumber, messageSMS);
+
+                /*HashMap<String, String> user = preferences.getUserData();
+                Log.i("Result",  "Name: " + user.get("username") + " Phone: " + user.get("phoneNumber") + " Token: " + user.get("token"));*/
+
             }
         });
 
@@ -55,7 +60,22 @@ public class LoginActivity extends AppCompatActivity {
         int randomNumber = random.nextInt((9999-1000) + 1000);
         String token = String.valueOf(randomNumber);
 
+        messageSMS = "Your validation token is " + token;
+
         return token;
+    }
+
+    public Boolean sendSMS(String phoneNumber, String message){
+        try {
+
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(phoneNumber, null, message, null, null);
+            return true;
+
+        } catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public void findViewsById(){
