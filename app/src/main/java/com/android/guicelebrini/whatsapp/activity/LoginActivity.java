@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.guicelebrini.whatsapp.R;
 import com.android.guicelebrini.whatsapp.helper.Permission;
@@ -59,6 +60,12 @@ public class LoginActivity extends AppCompatActivity {
                 //sending the SMS
                 Boolean wasSent = sendSMS("+" + phoneNumber, messageSMS);
 
+                if (wasSent == true) {
+                    changeActivity();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Oops... Algo deu errado", Toast.LENGTH_SHORT).show();
+                }
+
                 /*HashMap<String, String> user = preferences.getUserData();
                 Log.i("Result",  "Name: " + user.get("username") + " Phone: " + user.get("phoneNumber") + " Token: " + user.get("token"));*/
 
@@ -72,6 +79,8 @@ public class LoginActivity extends AppCompatActivity {
         int randomNumber = random.nextInt((9999-1000) + 1000);
         String token = String.valueOf(randomNumber);
 
+
+        Log.i("Result", token);
         messageSMS = "Your validation token is " + token;
 
         return token;
@@ -98,9 +107,9 @@ public class LoginActivity extends AppCompatActivity {
         editNumberPhone = findViewById(R.id.editNumberPhone);
     }
 
-    public void trocarTela(View view){
-        Intent destino = new Intent(getApplicationContext(), ValidacaoActivity.class);
-        startActivity(destino);
+    public void changeActivity(){
+        Intent intent = new Intent(getApplicationContext(), ValidacaoActivity.class);
+        startActivity(intent);
     }
 
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults){
