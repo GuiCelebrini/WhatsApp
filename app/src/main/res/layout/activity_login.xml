@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/whatsapp_green"
+    android:onClick="changeActivity"
     tools:context=".activity.LoginActivity">
 
     <ImageView
@@ -17,8 +18,33 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo_whatsapp" />
 
+    <Button
+        android:id="@+id/buttonLogin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="Login"
+        android:textColor="@color/whatsapp_green"
+        app:backgroundTint="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/editEmail"
+        app:layout_constraintStart_toStartOf="@+id/editEmail"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+
     <EditText
-        android:id="@+id/editPersonName"
+        android:id="@+id/editTextTextPassword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:hint="Digite sua senha"
+        android:inputType="textPassword"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/editEmail"
+        app:layout_constraintStart_toStartOf="@+id/editEmail"
+        app:layout_constraintTop_toBottomOf="@+id/editEmail" />
+
+    <EditText
+        android:id="@+id/editEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
@@ -27,63 +53,24 @@
         android:layout_marginEnd="50dp"
         android:layout_marginRight="50dp"
         android:ems="10"
-        android:hint="Digite seu nome"
-        android:inputType="textPersonName"
+        android:hint="Digite seu email"
+        android:inputType="textEmailAddress"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-    <EditText
-        android:id="@+id/editNumberCountry"
-        android:layout_width="50dp"
+    <TextView
+        android:id="@+id/textRegister"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:ems="10"
-        android:hint="+55"
-        android:inputType="number"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:text="@string/register_text_view"
         android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="@+id/editPersonName"
-        app:layout_constraintTop_toBottomOf="@+id/editPersonName" />
-
-    <EditText
-        android:id="@+id/editNumberDDD"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:ems="10"
-        android:hint="22"
-        android:inputType="number"
-        android:textColor="@color/white"
-        app:layout_constraintStart_toEndOf="@+id/editNumberCountry"
-        app:layout_constraintTop_toTopOf="@+id/editNumberCountry" />
-
-    <EditText
-        android:id="@+id/editNumberPhone"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:ems="10"
-        android:hint="999999999"
-        android:inputType="number"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/editPersonName"
-        app:layout_constraintStart_toEndOf="@+id/editNumberDDD"
-        app:layout_constraintTop_toTopOf="@+id/editNumberDDD" />
-
-    <Button
-        android:id="@+id/buttonRegister"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:onClick="trocarTela"
-        android:text="Cadastrar"
-        android:textColor="@color/whatsapp_green"
-        app:backgroundTint="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/editPersonName"
-        app:layout_constraintStart_toStartOf="@+id/editPersonName"
-        app:layout_constraintTop_toBottomOf="@+id/editNumberCountry" />
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
