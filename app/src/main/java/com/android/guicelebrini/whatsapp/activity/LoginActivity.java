@@ -25,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
 
         findViewsById();
         firebaseReference = FirebaseConfig.getFirebaseReference();
-        
+
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
