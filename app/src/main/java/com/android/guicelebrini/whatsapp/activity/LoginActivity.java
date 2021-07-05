@@ -9,10 +9,14 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.android.guicelebrini.whatsapp.R;
+import com.android.guicelebrini.whatsapp.config.FirebaseConfig;
+import com.google.firebase.database.DatabaseReference;
 
 public class LoginActivity extends AppCompatActivity {
     private Button buttonLogin;
-    private EditText editEmail;
+    private EditText editEmail, editPassword;
+
+    private DatabaseReference firebaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +24,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         findViewsById();
+        firebaseReference = FirebaseConfig.getFirebaseReference();
+        
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
