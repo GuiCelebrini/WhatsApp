@@ -16,6 +16,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -64,9 +67,27 @@ public class RegisterActivity extends AppCompatActivity {
                     FirebaseUser firebaseUser = task.getResult().getUser();
                     user.setId(firebaseUser.getUid());
                     user.saveInFirebase();
+
+                    auth.signOut();
                     finish();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Erro ao cadastrar usuário", Toast.LENGTH_SHORT).show();
+
+                    String exceptionMessage;
+
+                    try {
+                        throw task.getException();
+                    } catch (FirebaseAuthWeakPasswordException e) {
+                        exceptionMessage = "Digite uma senha mais forte, com mais caracteres e números";
+                    } catch (FirebaseAuthInvalidCredentialsException e) {
+                        exceptionMessage = "O endereço de email digitado é inválido";
+                    } catch (FirebaseAuthUserCollisionException e) {
+                        exceptionMessage = "Já existe um usuário usando esse email";
+                    } catch (Exception e) {
+                        exceptionMessage = "Erro ao cadastrar usuário";
+                        e.printStackTrace();
+                    }
+
+                    Toast.makeText(getApplicationContext(), exceptionMessage, Toast.LENGTH_LONG).show();
                 }
             }
         });
