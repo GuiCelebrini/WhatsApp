@@ -1,5 +1,9 @@
 package com.android.guicelebrini.whatsapp.model;
 
+import com.android.guicelebrini.whatsapp.config.FirebaseConfig;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Exclude;
+
 public class User {
 
     private String id;
@@ -7,12 +11,21 @@ public class User {
     private String email;
     private String password;
 
+    public User(){}
+
     public User(String name, String email, String password){
         this.setName(name);
         this.setEmail(email);
         this.setPassword(password);
     }
 
+    public void saveInFirebase(){
+        DatabaseReference userReference = FirebaseConfig.getFirebaseReference();
+
+        userReference.child("users").child(this.getId()).setValue(this);
+    }
+
+    @Exclude
     public String getId() {
         return id;
     }
@@ -37,6 +50,7 @@ public class User {
         this.email = email;
     }
 
+    @Exclude
     public String getPassword() {
         return password;
     }

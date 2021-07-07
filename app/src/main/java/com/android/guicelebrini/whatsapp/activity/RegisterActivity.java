@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -39,7 +40,6 @@ public class RegisterActivity extends AppCompatActivity {
 
                 user = new User(editName.getText().toString(), editEmail.getText().toString(), editPassword.getText().toString());
                 registerUser();
-                finish();
 
             }
         });
@@ -60,6 +60,11 @@ public class RegisterActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     Toast.makeText(getApplicationContext(), "Usuário cadastrado com sucesso", Toast.LENGTH_SHORT).show();
+
+                    FirebaseUser firebaseUser = task.getResult().getUser();
+                    user.setId(firebaseUser.getUid());
+                    user.saveInFirebase();
+                    finish();
                 } else {
                     Toast.makeText(getApplicationContext(), "Erro ao cadastrar usuário", Toast.LENGTH_SHORT).show();
                 }
