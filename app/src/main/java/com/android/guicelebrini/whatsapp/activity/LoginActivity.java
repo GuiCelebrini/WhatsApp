@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
 
         findViewsById();
 
-
+        isLoggedIn();
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +64,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void isLoggedIn(){
+        auth = FirebaseConfig.getFirebaseAuthentication();
+
+        if (auth.getCurrentUser() != null){
+            goToMainActivity();
+        }
     }
 
     public void findViewsById(){
