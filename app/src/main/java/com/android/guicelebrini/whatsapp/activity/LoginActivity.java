@@ -83,6 +83,7 @@ public class LoginActivity extends AppCompatActivity {
     public void goToMainActivity(){
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void goToRegisterActivity(View view){
