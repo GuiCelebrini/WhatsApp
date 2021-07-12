@@ -3,9 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/item_search"
+        android:title="Buscar"
+        android:icon="@drawable/ic_baseline_search_24"
+        app:showAsAction="ifRoom"
+        android:orderInCategory="100"/>
+
+    <item
+        android:id="@+id/item_add_person"
+        android:title="Adicionar contato"
+        android:icon="@drawable/ic_baseline_person_add_24"
+        app:showAsAction="ifRoom"
+        android:orderInCategory="200"/>
+
+    <item
+        android:id="@+id/item_settings"
+        android:title="Configurações"
+        android:icon="@drawable/ic_baseline_settings_24"
+        app:showAsAction="never"
+        android:orderInCategory="300"/>
+
+    <item
         android:id="@+id/item_logout"
         android:title="Sair"
         android:icon="@drawable/ic_baseline_exit_24"
-        app:showAsAction="never" />
+        app:showAsAction="never"
+        android:orderInCategory="400"/>
 
 </menu>
