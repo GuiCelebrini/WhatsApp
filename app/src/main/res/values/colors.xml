@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="whatsapp_green">#0B6156</color>
     <color name="whatsapp_darker_green">#0A5048</color>
+    <color name="colorAccent">#3D958A</color>
 </resources>
