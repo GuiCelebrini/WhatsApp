@@ -15,15 +15,20 @@ import android.view.MenuItem;
 import com.android.guicelebrini.whatsapp.R;
 import com.android.guicelebrini.whatsapp.adapter.TabAdapter;
 import com.android.guicelebrini.whatsapp.config.FirebaseConfig;
+import com.android.guicelebrini.whatsapp.fragment.ChatsFragment;
+import com.android.guicelebrini.whatsapp.fragment.ContactsFragment;
 import com.android.guicelebrini.whatsapp.helper.SlidingTabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
 public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
-    private SlidingTabLayout slidingTabLayout;
+    private SmartTabLayout tabLayoutMain;
     private ViewPager viewPager;
 
     private FirebaseAuth auth;
@@ -35,24 +40,15 @@ public class MainActivity extends AppCompatActivity {
         findViewsById();
         setSupportActionBar(toolbar);
 
-        //configuring adapter on viewPager
-        TabAdapter tabAdapter = new TabAdapter(getSupportFragmentManager(), 1);
-        viewPager.setAdapter(tabAdapter);
-
-        //configuring slidingTabLayout
-        slidingTabLayout.setDistributeEvenly(true);
-        slidingTabLayout.setSelectedIndicatorColors(ContextCompat.getColor(this, R.color.colorAccent));
-
-        //configuring viewPager on slidingTabLayout
-        slidingTabLayout.setViewPager(viewPager);
+        configureTabLayout();
 
 
     }
 
     public void findViewsById(){
         toolbar = findViewById(R.id.toolbar);
-        slidingTabLayout = findViewById(R.id.stl_tabs);
-        viewPager = findViewById(R.id.vpMain);
+        viewPager = findViewById(R.id.viewPager);
+        tabLayoutMain = findViewById(R.id.tabLayoutMain);
     }
 
     public void logoutUser(){
@@ -61,6 +57,29 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    public void configureTabLayout(){
+        /*//configuring adapter on viewPager
+        TabAdapter tabAdapter = new TabAdapter(getSupportFragmentManager(), 1);
+        viewPager.setAdapter(tabAdapter);
+
+        //configuring slidingTabLayout
+        slidingTabLayout.setDistributeEvenly(true);
+        slidingTabLayout.setSelectedIndicatorColors(ContextCompat.getColor(this, R.color.colorAccent));
+
+        //configuring viewPager on slidingTabLayout
+        slidingTabLayout.setViewPager(viewPager);*/
+
+        FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
+                getSupportFragmentManager(), FragmentPagerItems.with(this)
+                .add("CONVERSAS", ChatsFragment.class)
+                .add("CONTATOS", ContactsFragment.class)
+                .create());
+
+
+        viewPager.setAdapter(adapter);
+        tabLayoutMain.setViewPager(viewPager);
     }
 
 
