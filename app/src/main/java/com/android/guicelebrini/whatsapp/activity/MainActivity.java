@@ -1,16 +1,19 @@
 package com.android.guicelebrini.whatsapp.activity;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 import com.android.guicelebrini.whatsapp.R;
 import com.android.guicelebrini.whatsapp.adapter.TabAdapter;
@@ -51,12 +54,44 @@ public class MainActivity extends AppCompatActivity {
         tabLayoutMain = findViewById(R.id.tabLayoutMain);
     }
 
-    public void logoutUser(){
+    private void logoutUser(){
         auth = FirebaseConfig.getFirebaseAuthentication();
         auth.signOut();
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void openUserRegisterScreen(){
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
+
+        //configuring alertDialog
+        alertDialog.setTitle("Adicionar novo contato");
+        alertDialog.setMessage("Email do contato");
+        alertDialog.setCancelable(false);
+
+        EditText editEmail = new EditText(this);
+        alertDialog.setView(editEmail);
+
+        alertDialog.setPositiveButton("Adicionar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        alertDialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        alertDialog.create();
+        alertDialog.show();
+
+
     }
 
     public void configureTabLayout(){
@@ -97,6 +132,9 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()){
 
+            case R.id.item_add_person:
+                openUserRegisterScreen();
+                return true;
             case R.id.item_logout:
                 logoutUser();
                 return true;
