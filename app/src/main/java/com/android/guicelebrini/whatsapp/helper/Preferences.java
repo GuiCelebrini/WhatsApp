@@ -15,9 +15,7 @@ public class Preferences {
     private final String FILE_NAME = "whatsapp.preferences";
     private final int MODE = 0;
 
-    private final String KEY_NAME = "username";
-    private final String KEY_PHONE_NUMBER = "phoneNumber";
-    private final String KEY_TOKEN = "token";
+    private final String KEY_ID = "idLoggedUser";
 
     public Preferences(Context parameterContext){
         this.context = parameterContext;
@@ -25,26 +23,12 @@ public class Preferences {
         editor = preferences.edit();
     }
 
-    public void saveUserPreferences(String username, String phoneNumber, String token){
-        editor.putString(KEY_NAME, username);
-        editor.putString(KEY_PHONE_NUMBER, phoneNumber);
-        editor.putString(KEY_TOKEN, token);
+    public void saveData(String idUser){
+        editor.putString(KEY_ID, idUser);
         editor.commit();
     }
 
-    public HashMap<String, String> getUserData(){
-        HashMap<String, String> userData = new HashMap<>();
-
-        userData.put(KEY_NAME, preferences.getString(KEY_NAME, null));
-        userData.put(KEY_PHONE_NUMBER, preferences.getString(KEY_PHONE_NUMBER, null));
-        userData.put(KEY_TOKEN, preferences.getString(KEY_TOKEN, null));
-
-        return userData;
+    public String getUserId(){
+        return preferences.getString(KEY_ID, null);
     }
-
-
-
-
-
-
 }

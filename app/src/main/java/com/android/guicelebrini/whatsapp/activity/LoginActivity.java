@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.android.guicelebrini.whatsapp.R;
 import com.android.guicelebrini.whatsapp.config.FirebaseConfig;
+import com.android.guicelebrini.whatsapp.helper.Helper;
 import com.android.guicelebrini.whatsapp.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -56,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onComplete(Task<AuthResult> task) {
                 if (task.isSuccessful()){
+                    Helper.saveIdInPreferences(LoginActivity.this, user.getEmail());
                     Toast.makeText(getApplicationContext(), "Usuário logado com sucesso", Toast.LENGTH_SHORT).show();
                     goToMainActivity();
                 } else {

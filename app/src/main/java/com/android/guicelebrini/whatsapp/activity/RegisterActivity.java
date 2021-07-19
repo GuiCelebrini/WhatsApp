@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.android.guicelebrini.whatsapp.R;
 import com.android.guicelebrini.whatsapp.config.FirebaseConfig;
 import com.android.guicelebrini.whatsapp.helper.Base64Custom;
+import com.android.guicelebrini.whatsapp.helper.Helper;
 import com.android.guicelebrini.whatsapp.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -70,6 +71,7 @@ public class RegisterActivity extends AppCompatActivity {
                     user.setId(encodedEmail);
                     user.saveInFirebase();
 
+                    Helper.saveIdInPreferences(RegisterActivity.this, user.getEmail());
                     returnToLoginActivity();
                 } else {
 
