@@ -23,7 +23,10 @@ import com.android.guicelebrini.whatsapp.config.FirebaseConfig;
 import com.android.guicelebrini.whatsapp.fragment.ChatsFragment;
 import com.android.guicelebrini.whatsapp.fragment.ContactsFragment;
 import com.android.guicelebrini.whatsapp.helper.Base64Custom;
+import com.android.guicelebrini.whatsapp.helper.Preferences;
 import com.android.guicelebrini.whatsapp.helper.SlidingTabLayout;
+import com.android.guicelebrini.whatsapp.model.Contact;
+import com.android.guicelebrini.whatsapp.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
 
     private FirebaseAuth auth;
+    private DatabaseReference database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,34 +88,7 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.setPositiveButton("Adicionar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
-                String email = editEmail.getText().toString();
-
-                if (email.equals(null)){
-                    Toast.makeText(getApplicationContext(), "O campo não pode estar vazio", Toast.LENGTH_SHORT).show();
-                } else {
-                    String idAddedUser = Base64Custom.encode(email);
-
-                    DatabaseReference addedUser = FirebaseConfig.getFirebaseReference().child("users").child(idAddedUser);
-
-                    addedUser.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot snapshot) {
-                            if (snapshot.exists()){
-
-                            } else {
-                                Toast.makeText(getApplicationContext(), "O email inserido não existe", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError error) {
-
-                        }
-                    });
-
-                }
-
+                saveContact(editEmail);
             }
         });
 
@@ -126,6 +103,46 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.show();
 
 
+    }
+
+    public void saveContact(EditText editEmail){
+        String email = editEmail.getText().toString();
+
+        if (email.equals(null)){
+            Toast.makeText(getApplicationContext(), "O campo não pode estar vazio", Toast.LENGTH_SHORT).show();
+        } else {
+            String idAddedUser = Base64Custom.encode(email);
+
+            database = FirebaseConfig.getFirebaseReference().child("users").child(idAddedUser);
+
+            database.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    if (snapshot.exists()){
+
+                        User userContact = snapshot.getValue(User.class);
+
+                        Preferences preferences = new Preferences(MainActivity.this);
+                        String idLoggedUser = preferences.getUserId();
+
+                        database = FirebaseConfig.getFirebaseReference();
+                        database = database.child("users").child(idLoggedUser).child("addedContacts").child(idAddedUser);
+
+                        Contact contact = new Contact(idAddedUser, userContact.getEmail(), userContact.getName());
+                        database.setValue(contact);
+
+                    } else {
+                        Toast.makeText(getApplicationContext(), "O email inserido não existe", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+
+                }
+            });
+
+        }
     }
 
     public void configureTabLayout(){
