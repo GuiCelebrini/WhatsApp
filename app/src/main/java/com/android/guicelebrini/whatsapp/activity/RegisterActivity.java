@@ -3,6 +3,7 @@ package com.android.guicelebrini.whatsapp.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import com.android.guicelebrini.whatsapp.R;
 import com.android.guicelebrini.whatsapp.config.FirebaseConfig;
+import com.android.guicelebrini.whatsapp.helper.Base64Custom;
 import com.android.guicelebrini.whatsapp.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -64,12 +66,11 @@ public class RegisterActivity extends AppCompatActivity {
                 if (task.isSuccessful()){
                     Toast.makeText(getApplicationContext(), "Usuário cadastrado com sucesso", Toast.LENGTH_SHORT).show();
 
-                    FirebaseUser firebaseUser = task.getResult().getUser();
-                    user.setId(firebaseUser.getUid());
+                    String encodedEmail = Base64Custom.encode(user.getEmail());
+                    user.setId(encodedEmail);
                     user.saveInFirebase();
 
-                    auth.signOut();
-                    finish();
+                    returnToLoginActivity();
                 } else {
 
                     String exceptionMessage;
@@ -91,5 +92,11 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void returnToLoginActivity(){
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
