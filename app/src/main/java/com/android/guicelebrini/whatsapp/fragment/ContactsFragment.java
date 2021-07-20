@@ -2,6 +2,7 @@ package com.android.guicelebrini.whatsapp.fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,7 +15,13 @@ import android.widget.LinearLayout;
 
 import com.android.guicelebrini.whatsapp.R;
 import com.android.guicelebrini.whatsapp.adapter.AdapterRecyclerContacts;
+import com.android.guicelebrini.whatsapp.config.FirebaseConfig;
+import com.android.guicelebrini.whatsapp.helper.Preferences;
 import com.android.guicelebrini.whatsapp.model.Contact;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +31,10 @@ public class ContactsFragment extends Fragment {
     private RecyclerView recyclerContacts;
     private List<Contact> contactsList = new ArrayList<>();
     private View view;
+    private AdapterRecyclerContacts adapter;
+
+    private DatabaseReference reference;
+    private ValueEventListener valueEventListenerContacts;
 
 
     public ContactsFragment() {
@@ -39,7 +50,7 @@ public class ContactsFragment extends Fragment {
         findViewsById();
         createContactsList();
 
-        AdapterRecyclerContacts adapter = new AdapterRecyclerContacts(contactsList);
+        adapter = new AdapterRecyclerContacts(contactsList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
 
         recyclerContacts.setLayoutManager(layoutManager);
@@ -56,7 +67,45 @@ public class ContactsFragment extends Fragment {
     }
 
     public void createContactsList(){
-        contactsList.add(new Contact("", "albert@gmail.com", "Albert Johnson"));
+        Preferences preferences = new Preferences(getContext());
+        String idLoggedUser = preferences.getUserId();
+
+        reference = FirebaseConfig.getFirebaseReference();
+        reference = reference.child("users").child(idLoggedUser).child("addedContacts");
+
+        valueEventListenerContacts = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+
+                contactsList.clear();
+
+                for (DataSnapshot data : snapshot.getChildren()) {
+
+                    Contact contact = data.getValue(Contact.class);
+                    contactsList.add(contact);
+
+                }
+
+                adapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+            }
+        };
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        reference.addValueEventListener(valueEventListenerContacts);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        reference.removeEventListener(valueEventListenerContacts);
+    }
 }
