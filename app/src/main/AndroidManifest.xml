@@ -12,10 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WhatsApp">
+        <activity android:name=".activity.ChatActivity"></activity>
         <activity
             android:name=".activity.RegisterActivity"
             android:label="@string/title_activity_register"
-            android:theme="@style/Theme.WhatsApp.NoActionBar"></activity>
+            android:theme="@style/Theme.WhatsApp.NoActionBar" />
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.LoginActivity">
             <intent-filter>

@@ -1,5 +1,6 @@
 package com.android.guicelebrini.whatsapp.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,12 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
 import com.android.guicelebrini.whatsapp.R;
+import com.android.guicelebrini.whatsapp.activity.ChatActivity;
 import com.android.guicelebrini.whatsapp.adapter.AdapterRecyclerContacts;
 import com.android.guicelebrini.whatsapp.config.FirebaseConfig;
 import com.android.guicelebrini.whatsapp.helper.Preferences;
+import com.android.guicelebrini.whatsapp.helper.RecyclerItemClickListener;
 import com.android.guicelebrini.whatsapp.model.Contact;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -48,15 +52,10 @@ public class ContactsFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_contacts, container, false);
 
         findViewsById();
+
         createContactsList();
 
-        adapter = new AdapterRecyclerContacts(contactsList);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
-
-        recyclerContacts.setLayoutManager(layoutManager);
-        recyclerContacts.setHasFixedSize(true);
-        recyclerContacts.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayout.VERTICAL));
-        recyclerContacts.setAdapter(adapter);
+        configureRecyclerView();
 
 
         return view;
@@ -95,6 +94,35 @@ public class ContactsFragment extends Fragment {
 
             }
         };
+    }
+
+    public void configureRecyclerView(){
+        adapter = new AdapterRecyclerContacts(contactsList);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
+
+        recyclerContacts.setLayoutManager(layoutManager);
+        recyclerContacts.setHasFixedSize(true);
+        recyclerContacts.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayout.VERTICAL));
+        recyclerContacts.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), recyclerContacts, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+
+                Intent intent = new Intent(getActivity(), ChatActivity.class);
+                startActivity(intent);
+
+            }
+
+            @Override
+            public void onLongItemClick(View view, int position) {
+
+            }
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        }));
+        recyclerContacts.setAdapter(adapter);
     }
 
     @Override
