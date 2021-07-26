@@ -108,7 +108,8 @@ public class ContactsFragment extends Fragment {
             public void onItemClick(View view, int position) {
 
                 Intent intent = new Intent(getActivity(), ChatActivity.class);
-                intent.putExtra("contact", contactsList.get(position).getName());
+                intent.putExtra("contactName", contactsList.get(position).getName());
+                intent.putExtra("contactEmail", contactsList.get(position).getEmail());
                 startActivity(intent);
 
             }
