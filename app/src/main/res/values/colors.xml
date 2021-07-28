@@ -11,4 +11,5 @@
     <color name="whatsapp_darker_green">#0A5048</color>
     <color name="colorAccent">#3D958A</color>
     <color name="gray">#4B504F</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>

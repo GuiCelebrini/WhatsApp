@@ -67,10 +67,10 @@ public class ContactsFragment extends Fragment {
 
     public void createContactsList(){
         Preferences preferences = new Preferences(getContext());
-        String idLoggedUser = preferences.getUserId();
+        String loggedUserId = preferences.getUserId();
 
         reference = FirebaseConfig.getFirebaseReference();
-        reference = reference.child("users").child(idLoggedUser).child("addedContacts");
+        reference = reference.child("users").child(loggedUserId).child("addedContacts");
 
         valueEventListenerContacts = new ValueEventListener() {
             @Override
