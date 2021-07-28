@@ -103,6 +103,11 @@ public class ChatActivity extends AppCompatActivity {
 
                 for (DataSnapshot data : snapshot.getChildren()) {
                     Message message = data.getValue(Message.class);
+                    if (message.getIdUser().equals(loggedUserId)){
+                        message.setIsFromLoggedUser(1);
+                    } else {
+                        message.setIsFromLoggedUser(0);
+                    }
                     messagesList.add(message);
                 }
 

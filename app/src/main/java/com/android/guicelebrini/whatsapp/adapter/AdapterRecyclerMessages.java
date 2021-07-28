@@ -21,9 +21,23 @@ public class AdapterRecyclerMessages extends RecyclerView.Adapter<AdapterRecycle
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemList = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_messages_list, parent, false);
+    public int getItemViewType(int position) {
+        Message message = messagesList.get(position);
+        return message.getIsFromLoggedUser();
+    }
 
+    @Override
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemList = null;
+
+        switch(viewType){
+            case 1:
+                itemList = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_messages_list, parent, false);
+                break;
+            case 0:
+                itemList = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_messages_received_list, parent, false);
+                break;
+        }
         return new MyViewHolder(itemList);
     }
 
