@@ -67,6 +67,7 @@ public class ChatActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Message message = new Message(loggedUserId, editMessage.getText().toString());
                 saveMessage(loggedUserId, contactId, message);
+                saveMessage(contactId, loggedUserId, message);
                 editMessage.setText("");
             }
         });
