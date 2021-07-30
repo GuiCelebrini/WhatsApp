@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.android.guicelebrini.whatsapp.R;
 import com.android.guicelebrini.whatsapp.adapter.AdapterRecyclerMessages;
@@ -66,12 +67,24 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Message message = new Message(loggedUserId, editMessage.getText().toString());
-                saveMessage(loggedUserId, contactId, message);
-                saveMessage(contactId, loggedUserId, message);
+                checkSavedMessage(message);
                 editMessage.setText("");
             }
         });
 
+    }
+
+    private void checkSavedMessage(Message message){
+        Boolean isUserMessageSaved = saveMessage(loggedUserId, contactId, message);
+
+        if (isUserMessageSaved.equals(false)){
+            Toast.makeText(getApplicationContext(), "Erro ao salvar mensagem", Toast.LENGTH_SHORT).show();
+        } else {
+            Boolean isContactMessageSaved = saveMessage(contactId, loggedUserId, message);
+            if (isContactMessageSaved.equals(false)){
+                Toast.makeText(getApplicationContext(), "Erro ao salvar mensagem", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private boolean saveMessage(String loggedUserId, String contactId, Message message){
