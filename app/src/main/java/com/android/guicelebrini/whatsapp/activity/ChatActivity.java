@@ -111,6 +111,20 @@ public class ChatActivity extends AppCompatActivity {
         }
     }
 
+    private void checkSavedChat(Chat chat, String lastMessageSent){
+        Boolean isUserChatSaved = saveChat(loggedUserId, contactId, chat);
+
+        if (isUserChatSaved.equals(false)){
+            Toast.makeText(getApplicationContext(), "Erro ao salvar conversa", Toast.LENGTH_SHORT).show();
+        } else {
+            chat = new Chat(loggedUserId, loggedUserName, lastMessageSent);
+            Boolean isContactChatSaved = saveChat(contactId, loggedUserId, chat);
+            if (isContactChatSaved.equals(false)){
+                Toast.makeText(getApplicationContext(), "Erro ao salvar conversa", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     private boolean saveChat(String loggedUserId, String contactId, Chat chat){
         try {
             reference = FirebaseConfig.getFirebaseReference();
