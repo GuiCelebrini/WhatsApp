@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,7 +71,7 @@ public class ContactsFragment extends Fragment {
         String loggedUserId = preferences.getUserId();
 
         reference = FirebaseConfig.getFirebaseReference();
-        reference = reference.child("users").child(loggedUserId).child("addedContacts");
+        reference = reference.child("contacts").child(loggedUserId);
 
         valueEventListenerContacts = new ValueEventListener() {
             @Override

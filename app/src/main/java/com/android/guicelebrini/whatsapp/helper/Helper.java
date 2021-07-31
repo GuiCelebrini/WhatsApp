@@ -1,12 +1,14 @@
 package com.android.guicelebrini.whatsapp.helper;
 
 import android.content.Context;
+import android.util.Log;
 
 public class Helper {
 
-    public static void saveIdInPreferences(Context context, String email){
+    public static void saveDataInPreferences(Context context, String email, String name){
         Preferences preferences = new Preferences(context);
         String idLoggedUser = Base64Custom.encode(email);
-        preferences.saveData(idLoggedUser);
+        Log.i("Resultado", name + " Helper");
+        preferences.saveData(idLoggedUser, name);
     }
 }

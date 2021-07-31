@@ -20,6 +20,7 @@ import com.android.guicelebrini.whatsapp.adapter.AdapterRecyclerMessages;
 import com.android.guicelebrini.whatsapp.config.FirebaseConfig;
 import com.android.guicelebrini.whatsapp.helper.Base64Custom;
 import com.android.guicelebrini.whatsapp.helper.Preferences;
+import com.android.guicelebrini.whatsapp.model.Chat;
 import com.android.guicelebrini.whatsapp.model.Message;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,8 +45,8 @@ public class ChatActivity extends AppCompatActivity {
     private DatabaseReference reference;
     private ValueEventListener eventListener;
 
-    private String loggedUserId;
-    private String contactName, contactId;
+    private String loggedUserId, loggedUserName;
+    private String contactId, contactName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,7 @@ public class ChatActivity extends AppCompatActivity {
 
         preferences = new Preferences(getApplicationContext());
         loggedUserId = preferences.getUserId();
+        loggedUserName = preferences.getUserName();
 
         createMessagesList();
 
@@ -68,6 +70,12 @@ public class ChatActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Message message = new Message(loggedUserId, editMessage.getText().toString());
                 checkSavedMessage(message);
+
+                Chat chat = new Chat(contactId, contactName, message.getMessageText());
+                saveChat(loggedUserId, contactId, chat);
+                chat = new Chat(loggedUserId, loggedUserName, message.getMessageText());
+                saveChat(contactId, loggedUserId, chat);
+
                 editMessage.setText("");
             }
         });
@@ -95,6 +103,21 @@ public class ChatActivity extends AppCompatActivity {
                     .child(contactId)
                     .push()
                     .setValue(message);
+
+            return true;
+        } catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private boolean saveChat(String loggedUserId, String contactId, Chat chat){
+        try {
+            reference = FirebaseConfig.getFirebaseReference();
+            reference.child("chats")
+                    .child(loggedUserId)
+                    .child(contactId)
+                    .setValue(chat);
 
             return true;
         } catch (Exception e){

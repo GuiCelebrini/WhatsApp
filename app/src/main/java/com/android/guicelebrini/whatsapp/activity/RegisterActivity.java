@@ -71,7 +71,7 @@ public class RegisterActivity extends AppCompatActivity {
                     user.setId(encodedEmail);
                     user.saveInFirebase();
 
-                    Helper.saveIdInPreferences(RegisterActivity.this, user.getEmail());
+                    Helper.saveDataInPreferences(RegisterActivity.this, user.getEmail(), user.getName());
                     returnToLoginActivity();
                 } else {
 

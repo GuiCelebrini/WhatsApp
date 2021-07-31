@@ -123,10 +123,10 @@ public class MainActivity extends AppCompatActivity {
                         User userContact = snapshot.getValue(User.class);
 
                         Preferences preferences = new Preferences(MainActivity.this);
-                        String idLoggedUser = preferences.getUserId();
+                        String loggedUserId = preferences.getUserId();
 
                         database = FirebaseConfig.getFirebaseReference();
-                        database = database.child("users").child(idLoggedUser).child("addedContacts").child(idAddedUser);
+                        database = database.child("contacts").child(loggedUserId).child(idAddedUser);
 
                         Contact contact = new Contact(idAddedUser, userContact.getEmail(), userContact.getName());
                         database.setValue(contact);

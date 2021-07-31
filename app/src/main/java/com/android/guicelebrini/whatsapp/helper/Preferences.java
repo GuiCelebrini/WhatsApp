@@ -15,7 +15,8 @@ public class Preferences {
     private final String FILE_NAME = "whatsapp.preferences";
     private final int MODE = 0;
 
-    private final String KEY_ID = "idLoggedUser";
+    private final String KEY_ID = "loggedUserId";
+    private final String KEY_NAME = "loggedUserName";
 
     public Preferences(Context parameterContext){
         this.context = parameterContext;
@@ -23,12 +24,17 @@ public class Preferences {
         editor = preferences.edit();
     }
 
-    public void saveData(String idUser){
-        editor.putString(KEY_ID, idUser);
+    public void saveData(String userId, String userName){
+        editor.putString(KEY_ID, userId);
+        editor.putString(KEY_NAME, userName);
         editor.commit();
     }
 
     public String getUserId(){
         return preferences.getString(KEY_ID, null);
+    }
+
+    public String getUserName(){
+        return preferences.getString(KEY_NAME, null);
     }
 }
