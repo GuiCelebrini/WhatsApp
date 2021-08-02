@@ -13,17 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <!--<com.android.guicelebrini.whatsapp.helper.SlidingTabLayout
-        android:id="@+id/stl_tabs"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/whatsapp_green"></com.android.guicelebrini.whatsapp.helper.SlidingTabLayout>
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/vpMain"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>-->
 
     <com.ogaclejapan.smarttablayout.SmartTabLayout
         android:id="@+id/tabLayoutMain"

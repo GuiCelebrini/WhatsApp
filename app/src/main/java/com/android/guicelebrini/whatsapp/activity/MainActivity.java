@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.DialogInterface;
@@ -18,20 +17,17 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.guicelebrini.whatsapp.R;
-import com.android.guicelebrini.whatsapp.adapter.TabAdapter;
 import com.android.guicelebrini.whatsapp.config.FirebaseConfig;
 import com.android.guicelebrini.whatsapp.fragment.ChatsFragment;
 import com.android.guicelebrini.whatsapp.fragment.ContactsFragment;
 import com.android.guicelebrini.whatsapp.helper.Base64Custom;
 import com.android.guicelebrini.whatsapp.helper.Preferences;
-import com.android.guicelebrini.whatsapp.helper.SlidingTabLayout;
 import com.android.guicelebrini.whatsapp.model.Contact;
 import com.android.guicelebrini.whatsapp.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
@@ -146,16 +142,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void configureTabLayout(){
-        /*//configuring adapter on viewPager
-        TabAdapter tabAdapter = new TabAdapter(getSupportFragmentManager(), 1);
-        viewPager.setAdapter(tabAdapter);
-
-        //configuring slidingTabLayout
-        slidingTabLayout.setDistributeEvenly(true);
-        slidingTabLayout.setSelectedIndicatorColors(ContextCompat.getColor(this, R.color.colorAccent));
-
-        //configuring viewPager on slidingTabLayout
-        slidingTabLayout.setViewPager(viewPager);*/
 
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
                 getSupportFragmentManager(), FragmentPagerItems.with(this)
